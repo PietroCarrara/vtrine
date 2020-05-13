@@ -10,12 +10,12 @@ func index(c *gin.Context) {
 	fail(err)
 
 	err = templates.ExecuteTemplate(c.Writer, "index.go.html", map[string]interface{}{
-		"new": uniqueTMDB(new),
+		"new": uniqueIMDB(new),
 	})
 	fail(err)
 }
 
-func uniqueTMDB(torrents []torrentprovider.TorrentData) []torrentprovider.TorrentData {
+func uniqueIMDB(torrents []torrentprovider.TorrentData) []torrentprovider.TorrentData {
 	present := make(map[string]bool)
 	res := make([]torrentprovider.TorrentData, 0)
 

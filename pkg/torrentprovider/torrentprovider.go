@@ -27,6 +27,5 @@ type TorrentData struct {
 	Magnet       string    // The magnet link associated with this torrent
 	Size         uint64    // Size in bytes of the torrent's contents
 	IMDB         string    // The IMDB ID associated with this torrent
-	TMDB         string    // The TheMovieDB ID associated with this torrent
 	ProviderName string    // Name of this torrent's provider
 }

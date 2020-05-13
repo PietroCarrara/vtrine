@@ -22,39 +22,22 @@ function loadTMDB(elements) {
     var notLoaded = [];
 
     for (let i of elements) {
-        if (!i.dataset.tmdb || i.dataset.dataLoaded) {
+        if (!i.dataset.imdb || i.dataset.dataLoaded) {
             if (!i.dataset.dataLoaded) {
                 notLoaded.push(i);
             }
             continue;
         }
 
-        var prom;
-
-        prom = tmdb.movies
-            .getById(i.dataset.tmdb)
-            .then(movie => {
-                setDataMovieTMDB(i, movie);
-                i.dataset.dataLoaded = true;
-            })
-            .catch(async err => {
-                if (err.response.status == 404) {
-                    await tmdb.tv
-                        .getById(i.dataset.tmdb)
-                        .then(series => {
-                            setDataSeriesTMDB(i, series);
-                            i.dataset.dataLoaded = true;
-                        })
-                        .catch(() => {
-                            delete i.dataset.dataLoaded;
-                            notLoaded.push(i);
-                        });
-                } else {
-                    delete i.dataset.dataLoaded;
-                    notLoaded.push(i);
-                }
-            })
-
+        var prom = tmdb.find
+        .getById(i.dataset.imdb, 'imdb_id')
+        .then(res => {
+            if (res.movie_results.length > 0) {
+                setDataMovieTMDB(i, res.movie_results[0]);
+            } else if (res.tv_results.length > 0) {
+                setDataSeriesTMDB(i, res.tv_results[0]);
+            }
+        });
 
         promises.push(prom);
     }
@@ -71,6 +54,7 @@ function loadTMDB(elements) {
 function setDataMovieTMDB(element, movie) {
     var data = element.dataset;
 
+    data.dataLoaded = true;
     data.title = movie.title;
     data.overview = movie.overview;
     data.screening = movie.release_date;
@@ -89,6 +73,7 @@ function setDataMovieTMDB(element, movie) {
 function setDataSeriesTMDB(element, series) {
     var data = element.dataset;
 
+    data.dataLoaded = true;
     data.title = series.name;
     data.overview = series.overview;
     data.screening = series.first_air_date;

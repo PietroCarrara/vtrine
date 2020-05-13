@@ -17,16 +17,12 @@ func data(res torrentapi.TorrentResults) []torrentprovider.TorrentData {
 			Magnet:       torr.Download,
 			Size:         torr.Size,
 			IMDB:         torr.EpisodeInfo.ImDB,
-			TMDB:         torr.EpisodeInfo.TheMovieDb,
 			ProviderName: name,
 		}
 
 		// Clean bad data
 		if torrents[i].IMDB == "0" {
 			torrents[i].IMDB = ""
-		}
-		if torrents[i].TMDB == "0" {
-			torrents[i].TMDB = ""
 		}
 	}
 
