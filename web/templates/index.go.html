@@ -1,0 +1,15 @@
+{{ template "header" }}
+
+
+<div class="container">
+    <div class="row">
+        <h3>New Media</h3>
+    </div>
+    <div class="row">
+        {{ range .new }}
+            {{ template "movie-thumb" . }}
+        {{ end }}
+    </div>
+</div>
+
+{{ template "footer" }}

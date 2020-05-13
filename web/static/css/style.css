@@ -1,0 +1,17 @@
+.lifted {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.75);
+}
+
+.movie-poster {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.rh-30 {
+    height: 30rem;
+}
+
+.h-80 {
+    height: 80%;
+}

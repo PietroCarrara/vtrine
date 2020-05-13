@@ -1,0 +1,31 @@
+{{ define "header" }}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VTrine</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- TMDB API -->
+    <script src="/static/js/tmdb/themoviedb.js"></script>
+    <script>
+        var tmdb = theMovieDb;
+        tmdb.common.api_key = '{{env "TMDB_KEY"}}'
+    </script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <script src="/static/js/data-loader.js"></script>
+</head>
+<body>
+{{ end }}
