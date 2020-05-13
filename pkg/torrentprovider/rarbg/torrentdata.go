@@ -12,12 +12,13 @@ func data(res torrentapi.TorrentResults) []torrentprovider.TorrentData {
 
 	for i, torr := range res {
 		torrents[i] = torrentprovider.TorrentData{
-			Title:  torr.Title,
-			Type:   mediaType(torr.Category),
-			Magnet: torr.Download,
-			Size:   torr.Size,
-			IMDB:   torr.EpisodeInfo.ImDB,
-			TMDB:   torr.EpisodeInfo.TheMovieDb,
+			Title:        torr.Title,
+			Type:         mediaType(torr.Category),
+			Magnet:       torr.Download,
+			Size:         torr.Size,
+			IMDB:         torr.EpisodeInfo.ImDB,
+			TMDB:         torr.EpisodeInfo.TheMovieDb,
+			ProviderName: name,
 		}
 
 		// Clean bad data

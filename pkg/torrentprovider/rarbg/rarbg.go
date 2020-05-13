@@ -6,6 +6,7 @@ import (
 )
 
 const format = "json_extended"
+const name = "rargb"
 
 type Rarbg struct {
 	api *torrentapi.API
@@ -20,11 +21,17 @@ func New(appName string) (*Rarbg, error) {
 }
 
 func (r *Rarbg) Name() string {
-	return "rarbg"
+	return name
 }
 
 func (r *Rarbg) Search(s string) ([]torrentprovider.TorrentData, error) {
 	res, err := r.api.Format(format).SearchString(s).Search()
+
+	return data(res), err
+}
+
+func (r *Rarbg) SearchIMDB(id string) ([]torrentprovider.TorrentData, error) {
+	res, err := r.api.SearchIMDb(id).Search()
 
 	return data(res), err
 }

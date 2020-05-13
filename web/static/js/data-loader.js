@@ -23,17 +23,38 @@ function loadTMDB(elements) {
 
     for (let i of elements) {
         if (!i.dataset.tmdb || i.dataset.dataLoaded) {
-            notLoaded.push(i);
+            if (!i.dataset.dataLoaded) {
+                notLoaded.push(i);
+            }
             continue;
         }
 
-        var prom = tmdb.movies
+        var prom;
+
+        prom = tmdb.movies
             .getById(i.dataset.tmdb)
-            .then((movie) => {
-                setDataTMDB(i, movie);
+            .then(movie => {
+                setDataMovieTMDB(i, movie);
                 i.dataset.dataLoaded = true;
             })
-            .catch(() => i.dataset.dataLoaded = false);
+            .catch(async err => {
+                if (err.response.status == 404) {
+                    await tmdb.tv
+                        .getById(i.dataset.tmdb)
+                        .then(series => {
+                            setDataSeriesTMDB(i, series);
+                            i.dataset.dataLoaded = true;
+                        })
+                        .catch(() => {
+                            delete i.dataset.dataLoaded;
+                            notLoaded.push(i);
+                        });
+                } else {
+                    delete i.dataset.dataLoaded;
+                    notLoaded.push(i);
+                }
+            })
+
 
         promises.push(prom);
     }
@@ -47,7 +68,7 @@ function loadTMDB(elements) {
  * @param {HTMLElement} element The element to fill the dataset
  * @param {*} movie Object containing movie data
  */
-function setDataTMDB(element, movie) {
+function setDataMovieTMDB(element, movie) {
     var data = element.dataset;
 
     data.title = movie.title;
@@ -56,5 +77,23 @@ function setDataTMDB(element, movie) {
 
     if (movie.poster_path !== null) {
         data.poster = tmdb.common.getImage('w342', movie.poster_path);
+    }
+}
+
+/**
+ * Fill a dataset with series data
+ *
+ * @param {HTMLElement} element The element to fill the dataset
+ * @param {*} series Object containing series data
+ */
+function setDataSeriesTMDB(element, series) {
+    var data = element.dataset;
+
+    data.title = series.name;
+    data.overview = series.overview;
+    data.screening = series.first_air_date;
+
+    if (series.poster_path !== null) {
+        data.poster = tmdb.common.getImage('w342', series.poster_path);
     }
 }
