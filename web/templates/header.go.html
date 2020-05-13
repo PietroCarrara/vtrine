@@ -16,11 +16,15 @@
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <!-- TMDB API -->
+    <!-- TMDB and OMDB -->
     <script src="/static/js/tmdb/themoviedb.js"></script>
+    <script src="/static/js/omdb/omdb.js"></script>
+
     <script>
         var tmdb = theMovieDb;
-        tmdb.common.api_key = '{{env "TMDB_KEY"}}'
+        tmdb.common.api_key = '{{env "TMDB_KEY"}}';
+
+        var omdb = new OMDB('{{env "OMDB_KEY"}}');
     </script>
 
     <link rel="stylesheet" href="/static/css/style.css">

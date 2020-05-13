@@ -8,6 +8,15 @@
     background-repeat: no-repeat;
 }
 
+.unlink, .unlink:hover, .unlink:visited {
+    text-decoration: none;
+    color: #212529;
+}
+
+.pt-50 {
+    padding-top: 50%;
+}
+
 .rh-30 {
     height: 30rem;
 }

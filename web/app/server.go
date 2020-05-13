@@ -9,6 +9,8 @@ import (
 
 var provider torrentprovider.TorrentProvider
 
+// Serve starts the server, listening for requests on a port,
+// using a torrent provider to fetch torrent data
 func Serve(port int, torr torrentprovider.TorrentProvider) {
 	loadTemplates()
 
