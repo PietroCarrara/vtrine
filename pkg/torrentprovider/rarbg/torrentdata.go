@@ -12,7 +12,7 @@ func data(res torrentapi.TorrentResults) []torrentprovider.TorrentData {
 
 	for i, torr := range res {
 		torrents[i] = torrentprovider.TorrentData{
-			Title:        torr.Filename,
+			Title:        torr.Title,
 			Type:         mediaType(torr.Category),
 			Magnet:       torr.Download,
 			Size:         torr.Size,

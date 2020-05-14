@@ -31,7 +31,7 @@ func (r *Rarbg) Search(s string) ([]torrentprovider.TorrentData, error) {
 }
 
 func (r *Rarbg) SearchIMDB(id string) ([]torrentprovider.TorrentData, error) {
-	res, err := r.api.SearchIMDb(id).Search()
+	res, err := r.api.Format(format).SearchIMDb(id).Search()
 
 	return data(res), err
 }

@@ -4,4 +4,9 @@
     {{ template "media-info" . }}
 </div>
 
+<script>
+    loadBasic(document.querySelectorAll('.movie-data'))
+    .then(loadVideo)
+    .then(loaded => applyData(loaded));
+</script>
 {{ template "footer" }}

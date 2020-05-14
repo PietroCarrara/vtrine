@@ -5,8 +5,11 @@
     <meta charset="utf-8">
     <title>VTrine</title>
 
-
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
@@ -19,7 +22,6 @@
     <!-- TMDB and OMDB -->
     <script src="/static/js/tmdb/themoviedb.js"></script>
     <script src="/static/js/omdb/omdb.js"></script>
-
     <script>
         var tmdb = theMovieDb;
         tmdb.common.api_key = '{{env "TMDB_KEY"}}';
@@ -28,8 +30,8 @@
     </script>
 
     <link rel="stylesheet" href="/static/css/style.css">
-
     <script src="/static/js/data-loader.js"></script>
+    <script src="/static/js/movie-data.js"></script>
 </head>
 <body>
 {{ end }}
