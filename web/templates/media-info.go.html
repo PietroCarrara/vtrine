@@ -1,0 +1,21 @@
+{{ define "media-info" }}
+
+<div class="movie-data container" data-imdb="{{ .imdb }}">
+    <div class="row">
+        <div class="movie-poster sticky-top col-md-3 vh-75 lifted rounded"></div>
+        <div class="col-md-8 mx-3">
+            <h1 class="movie-title"></h1>
+            <span class="movie-screening text-muted"></span>
+            <p class="movie-overview"></p>
+            {{ if .torrents }}
+            <div>
+                {{ range .torrents }}
+                    <a href="{{ url .Magnet }}"><p>{{ .Title }}</p></a>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+{{ end }}

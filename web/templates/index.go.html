@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         {{ range .new }}
-            {{ template "movie-thumb" . }}
+            {{ template "movie-thumb" .IMDB }}
         {{ end }}
     </div>
 </div>
