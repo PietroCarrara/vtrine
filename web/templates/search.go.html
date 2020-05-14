@@ -1,0 +1,77 @@
+{{ template "header" }}
+
+<!-- Model to be cloned by javascript -->
+<template id="thumbnail-model">
+    {{ template "movie-thumb" "" }}
+</template>
+
+<div class="container">
+    <div class="row">
+        <h3>Results</h3>
+    </div>
+    <div class="row" id="search-area">
+
+    </div>
+</div>
+
+<script>
+    var url = new URL(window.location.href);
+    var search = url.searchParams.get('q');
+
+    var model = document.querySelector('#thumbnail-model');
+    var area = document.getElementById('search-area');
+
+    var movies = tmdb.search.getMovie(search);
+    var shows = tmdb.search.getTv(search);
+
+    movies = movies.then(async data => {
+        var promises = [];
+
+        for (var i of data.results) {
+            promises.push(
+                tmdb.movies.getById(i.id)
+                    .then(movie => {
+                        // Unfortunate hack to create a new element
+                        var element = document.createElement('div');
+                        element.innerHTML = model.innerHTML;
+                        element = element.firstElementChild;
+
+                        setDataMovieTMDB(element, movie);
+
+                        area.appendChild(element);
+                    })
+            );
+        }
+
+        return Promise.all(promises);
+    });
+    shows = shows.then(async data => {
+        var promises = [];
+
+        for (var i of data.results) {
+            promises.push(
+                tmdb.tv.getById(i.id)
+                    .then(async show => {
+
+                        // Unfortunate hack to create a new element
+                        var element = document.createElement('div');
+                        element.innerHTML = model.innerHTML;
+                        element = element.firstElementChild;
+
+                        var ids = await tmdb.tv.getExternalIds(show.id);
+                        show.imdb_id = ids.imdb_id;
+
+                        setDataSeriesTMDB(element, show);
+
+                        area.appendChild(element);
+                    })
+            );
+        }
+
+        return Promise.all(promises);
+    });
+
+    Promise.all([movies, shows])
+        .then(() => applyData(document.querySelectorAll('.movie-data')));
+</script>
+{{ template "footer" }}

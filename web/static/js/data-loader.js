@@ -43,12 +43,16 @@ function loadBasicTMDB(elements) {
 
         var prom = tmdb.find
             .getById(i.dataset.imdb, 'imdb_id')
-            .then(res => {
+            .then(async res => {
                 if (res.movie_results.length > 0) {
                     loaded.push(i);
                     setDataMovieTMDB(i, res.movie_results[0]);
                 } else if (res.tv_results.length > 0) {
                     loaded.push(i);
+
+                    var ids = await tmdb.tv.getExternalIds(res.tv_results[0].id);
+                    res.tv_results[0].imdb_id = ids.imdb_id;
+
                     setDataSeriesTMDB(i, res.tv_results[0]);
                 }
             });
@@ -147,6 +151,10 @@ function setDataMovieTMDB(element, movie) {
     if (movie.poster_path !== null) {
         data.poster = tmdb.common.getImage('w342', movie.poster_path);
     }
+
+    if (!data.imdb) {
+        data.imdb = movie.imdb_id;
+    }
 }
 
 /**
@@ -165,6 +173,10 @@ function setDataSeriesTMDB(element, series) {
 
     if (series.poster_path !== null) {
         data.poster = tmdb.common.getImage('w342', series.poster_path);
+    }
+
+    if (!data.imdb) {
+        data.imdb = series.imdb_id;
     }
 }
 

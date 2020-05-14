@@ -1,6 +1,7 @@
 {{ define "header" }}
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>VTrine</title>
@@ -9,7 +10,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
@@ -33,5 +35,19 @@
     <script src="/static/js/data-loader.js"></script>
     <script src="/static/js/movie-data.js"></script>
 </head>
+
 <body>
-{{ end }}
+    <nav class="navbar navbar-light bg-light">
+        <a href="/">
+            <h1 class="navbar-brand" href="#">VTrine</h1>
+        </a>
+        <form class="form-inline" action="/search/name">
+            <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search for content..."
+                aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                <i class="zmdi zmdi-search"></i>
+            </button>
+        </form>
+    </nav>
+
+    {{ end }}

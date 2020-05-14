@@ -20,6 +20,7 @@ func Serve(port int, torr torrentprovider.TorrentProvider) {
 
 	router.GET("/", index)
 	router.GET("/media/:imdb", media)
+	router.GET("/search/name", searchName)
 	router.Static("/static", "web/static")
 
 	router.Run(fmt.Sprintf("0.0.0.0:%d", port))
