@@ -27,9 +27,12 @@ function applyData(elements) {
         }
 
         if (poster && i.dataset.poster) {
-            poster.style.backgroundImage = `url(${i.dataset.poster})`;
+            poster.src = i.dataset.poster;
         } else if (noPoster) {
             noPoster.classList.remove('invisible');
+            if (poster) {
+                poster.classList.add('invisible');
+            }
         }
 
         if (link && i.dataset.imdb) {
