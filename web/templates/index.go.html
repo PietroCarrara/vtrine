@@ -1,19 +1,56 @@
 {{ template "header" }}
 
+<template id="thumbnail-template">
+    {{ template "movie-thumb" "" }}
+</template>
 
 <div class="container">
     <div class="row">
-        <h3>New Media</h3>
+        <h3>Popular Movies</h3>
     </div>
+    <div class="row" id="popular-movies-container"></div>
     <div class="row">
-        {{ range .new }}
-            {{ template "movie-thumb" .IMDB }}
-        {{ end }}
+        <h3>Popular Shows</h3>
     </div>
+    <div class="row" id="popular-shows-container"></div>
 </div>
 
 <script>
-    loadBasic(document.querySelectorAll('.movie-data'))
-    .then(loaded => applyData(loaded));
+    var model = document.getElementById('thumbnail-template');
+
+    var movies = tmdb.movies.getPopular();
+    var shows = tmdb.tv.getPopular();
+
+    var moviesContainer = document.getElementById('popular-movies-container');
+    var showsContainer = document.getElementById('popular-shows-container');
+
+    movies = movies.then(data => {
+        var promises = [];
+
+        for (var movie of data.results) {
+            promises.push(new Promise(async (resolve) =>
+                resolve(moviesContainer.appendChild(await createMovieTMDB(model.innerHTML, movie)))
+            ));
+        }
+
+        return Promise.all(promises);
+    });
+    shows = shows.then(async data => {
+        var promises = [];
+
+        for (var show of data.results) {
+            promises.push(new Promise(async (resolve) =>
+                resolve(showsContainer.appendChild(await createShowTMDB(model.innerHTML, show)))
+            ));
+        }
+
+        return Promise.all(promises);
+    });
+
+    movies.then(console.log);
+    shows.then(console.log);
+
+    Promise.all([movies, shows])
+        .then(() => applyData(document.querySelectorAll('.movie-data')));
 </script>
 {{ template "footer" }}

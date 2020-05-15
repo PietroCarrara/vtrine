@@ -1,4 +1,4 @@
-{{ template "header" }}
+{{ template "header" . }}
 
 <!-- Model to be cloned by javascript -->
 <template id="thumbnail-model">
@@ -9,7 +9,7 @@
     <div class="row">
         <h3>Results</h3>
     </div>
-    <div class="row" id="search-area">
+    <div class="row" id="search-container">
 
     </div>
 </div>
@@ -19,7 +19,7 @@
     var search = url.searchParams.get('q');
 
     var model = document.querySelector('#thumbnail-model');
-    var area = document.getElementById('search-area');
+    var area = document.getElementById('search-container');
 
     var movies = tmdb.search.getMovie(search);
     var shows = tmdb.search.getTv(search);
@@ -27,20 +27,10 @@
     movies = movies.then(async data => {
         var promises = [];
 
-        for (var i of data.results) {
-            promises.push(
-                tmdb.movies.getById(i.id)
-                    .then(movie => {
-                        // Unfortunate hack to create a new element
-                        var element = document.createElement('div');
-                        element.innerHTML = model.innerHTML;
-                        element = element.firstElementChild;
-
-                        setDataMovieTMDB(element, movie);
-
-                        area.appendChild(element);
-                    })
-            );
+        for (var movie of data.results) {
+            promises.push(new Promise(async resolve =>
+                resolve(area.appendChild(await createMovieTMDB(model.innerHTML, movie)))
+            ));
         }
 
         return Promise.all(promises);
@@ -48,24 +38,10 @@
     shows = shows.then(async data => {
         var promises = [];
 
-        for (var i of data.results) {
-            promises.push(
-                tmdb.tv.getById(i.id)
-                    .then(async show => {
-
-                        // Unfortunate hack to create a new element
-                        var element = document.createElement('div');
-                        element.innerHTML = model.innerHTML;
-                        element = element.firstElementChild;
-
-                        var ids = await tmdb.tv.getExternalIds(show.id);
-                        show.imdb_id = ids.imdb_id;
-
-                        setDataSeriesTMDB(element, show);
-
-                        area.appendChild(element);
-                    })
-            );
+        for (var show of data.results) {
+            promises.push(new Promise(async resolve =>
+                resolve(area.appendChild(await createShowTMDB(model.innerHTML, show)))
+            ));
         }
 
         return Promise.all(promises);

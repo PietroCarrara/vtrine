@@ -49,11 +49,7 @@ function loadBasicTMDB(elements) {
                     setDataMovieTMDB(i, res.movie_results[0]);
                 } else if (res.tv_results.length > 0) {
                     loaded.push(i);
-
-                    var ids = await tmdb.tv.getExternalIds(res.tv_results[0].id);
-                    res.tv_results[0].imdb_id = ids.imdb_id;
-
-                    setDataSeriesTMDB(i, res.tv_results[0]);
+                    setDataShowTMDB(i, res.tv_results[0]);
                 }
             });
 
@@ -152,7 +148,7 @@ function setDataMovieTMDB(element, movie) {
         data.poster = tmdb.common.getImage('w342', movie.poster_path);
     }
 
-    if (!data.imdb) {
+    if (!data.imdb && movie.imdb_id) {
         data.imdb = movie.imdb_id;
     }
 }
@@ -163,7 +159,7 @@ function setDataMovieTMDB(element, movie) {
  * @param {HTMLElement} element The element to fill the dataset
  * @param {*} series Object containing series data
  */
-function setDataSeriesTMDB(element, series) {
+function setDataShowTMDB(element, series) {
     var data = element.dataset;
 
     data.dataLoaded = true;
@@ -175,7 +171,7 @@ function setDataSeriesTMDB(element, series) {
         data.poster = tmdb.common.getImage('w342', series.poster_path);
     }
 
-    if (!data.imdb) {
+    if (!data.imdb && series.imdb_id) {
         data.imdb = series.imdb_id;
     }
 }

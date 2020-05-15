@@ -2,7 +2,9 @@
 
 <div class="movie-data container" data-imdb="{{ .imdb }}">
     <div class="row">
-        <div class="movie-poster sticky-top col-md-3 vh-75 lifted rounded"></div>
+        <div class="col-md-3 sticky-top vh-75 px-0 pt-3">
+            <div class="movie-poster vh-75 lifted rounded"></div>
+        </div>
         <div class="col-md-8 mx-3">
             <h1 class="movie-title"></h1>
             <span class="movie-screening text-muted"></span>
@@ -15,16 +17,16 @@
             {{ if .torrents }}
             <table class="table">
                 <thead>
-                    <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Information</th>
+                    <tr class="row">
+                        <th scope="col" class="col-10">Title</th>
+                        <th scope="col" class="col-2 text-right">Information</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{ range .torrents }}
-                    <tr>
-                        <td><span class="text-truncate">{{ .Title }}</span></td>
-                        <td>
+                    <tr class="row">
+                        <td class="col-10 text-truncate">{{ .Title }}</td>
+                        <td class="col-2 text-right">
                             <span class="badge badge-secondary">{{ byte .Size }}</span>
                             <a href="{{ url .Magnet }}">
                                 <span class="badge badge-success">
