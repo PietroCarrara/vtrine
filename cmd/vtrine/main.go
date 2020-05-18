@@ -3,7 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/PietroCarrara/vtrine/pkg/torrentprovider/rarbg"
+	"github.com/PietroCarrara/vtrine/pkg/torrent/deluge"
+	"github.com/PietroCarrara/vtrine/pkg/torrent/rarbg"
 	"github.com/PietroCarrara/vtrine/web/app"
 	"github.com/joho/godotenv"
 )
@@ -20,5 +21,8 @@ func main() {
 	rar, err := rarbg.New("vtrine")
 	fail(err)
 
-	app.Serve(54321, rar)
+	del, err := deluge.New()
+	fail(err)
+
+	app.Serve(54321, rar, del)
 }

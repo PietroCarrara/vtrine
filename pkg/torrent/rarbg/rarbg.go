@@ -1,7 +1,7 @@
 package rarbg
 
 import (
-	"github.com/PietroCarrara/vtrine/pkg/torrentprovider"
+	"github.com/PietroCarrara/vtrine/pkg/torrent"
 	"github.com/qopher/go-torrentapi"
 )
 
@@ -24,51 +24,51 @@ func (r *Rarbg) Name() string {
 	return name
 }
 
-func (r *Rarbg) Search(s string) ([]torrentprovider.TorrentData, error) {
+func (r *Rarbg) Search(s string) ([]torrent.TorrentData, error) {
 	res, err := r.api.Format(format).SearchString(s).Search()
 
 	return data(res), err
 }
 
-func (r *Rarbg) SearchIMDB(id string) ([]torrentprovider.TorrentData, error) {
+func (r *Rarbg) SearchIMDB(id string) ([]torrent.TorrentData, error) {
 	res, err := r.api.Format(format).SearchIMDb(id).Search()
 
 	return data(res), err
 }
 
-func (r *Rarbg) SearchMediaType(mt torrentprovider.MediaType, s string) ([]torrentprovider.TorrentData, error) {
+func (r *Rarbg) SearchMediaType(mt torrent.MediaType, s string) ([]torrent.TorrentData, error) {
 
 	var res torrentapi.TorrentResults
 	var err error
 
 	switch mt {
-	case torrentprovider.MediaTypeAnime, torrentprovider.MediaTypeUnknown:
+	case torrent.MediaTypeAnime, torrent.MediaTypeUnknown:
 		return empty(), nil
-	case torrentprovider.MediaTypeMovie:
+	case torrent.MediaTypeMovie:
 		res, err = r.api.Format(format).Movies().SearchString(s).Search()
-	case torrentprovider.MediaTypeTVShow:
+	case torrent.MediaTypeTVShow:
 		res, err = r.api.Format(format).TV().SearchString(s).Search()
 	}
 
 	return data(res), err
 }
 
-func (r *Rarbg) New() ([]torrentprovider.TorrentData, error) {
+func (r *Rarbg) New() ([]torrent.TorrentData, error) {
 	res, err := r.api.Format(format).List()
 
 	return data(res), err
 }
 
-func (r *Rarbg) NewMediaType(mt torrentprovider.MediaType) ([]torrentprovider.TorrentData, error) {
+func (r *Rarbg) NewMediaType(mt torrent.MediaType) ([]torrent.TorrentData, error) {
 	var res torrentapi.TorrentResults
 	var err error
 
 	switch mt {
-	case torrentprovider.MediaTypeAnime, torrentprovider.MediaTypeUnknown:
+	case torrent.MediaTypeAnime, torrent.MediaTypeUnknown:
 		return empty(), nil
-	case torrentprovider.MediaTypeMovie:
+	case torrent.MediaTypeMovie:
 		res, err = r.api.Format(format).Movies().List()
-	case torrentprovider.MediaTypeTVShow:
+	case torrent.MediaTypeTVShow:
 		res, err = r.api.Format(format).TV().List()
 	}
 

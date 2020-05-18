@@ -1,4 +1,4 @@
-package torrentprovider
+package torrent
 
 type MediaType int
 
@@ -28,4 +28,17 @@ type TorrentData struct {
 	Size         uint64    // Size in bytes of the torrent's contents
 	IMDB         string    // The IMDB ID associated with this torrent
 	ProviderName string    // Name of this torrent's provider
+}
+
+func (m MediaType) String() string {
+	switch m {
+	case MediaTypeMovie:
+		return "movie"
+	case MediaTypeTVShow:
+		return "tv"
+	case MediaTypeAnime:
+		return "anime"
+	default:
+		return "unknown"
+	}
 }

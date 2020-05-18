@@ -2,7 +2,7 @@
 
 <div class="movie-data container" data-imdb="{{ .imdb }}">
     <div class="row">
-        <div class="col-md-3 sticky-top vh-75 px-0 pt-3">
+        <div class="col-md-3 sticky-top rh-30 px-0 pt-3">
             <img class="movie-poster lifted rounded">
         </div>
         <div class="col-md-8 mx-3">
@@ -28,11 +28,13 @@
                         <td class="col-10 text-truncate">{{ .Title }}</td>
                         <td class="col-2 text-right">
                             <span class="badge badge-secondary">{{ byte .Size }}</span>
-                            <a href="{{ url .Magnet }}">
-                                <span class="badge badge-success">
+                            <form class="inline" action="/torrent/download" method="POST">
+                                <input type="hidden" name="magnet" value="{{ .Magnet }}">
+                                <input type="hidden" name="category" value="{{ .Type }}">
+                                <button type="submit" class="btn btn-success badge">
                                     <i class="zmdi zmdi-download"></i>
-                                </span>
-                            </a>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     {{ end }}
