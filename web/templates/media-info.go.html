@@ -2,40 +2,41 @@
 
 <div class="movie-data container" data-imdb="{{ .imdb }}">
     <div class="row">
-        <div class="col-md-3 sticky-top rh-30 px-0 pt-3">
-            <img class="movie-poster lifted rounded">
+        <div class="col-12 col-md-4 text-center mb-4">
+            <img class="movie-poster lifted rounded img-fluid">
         </div>
-        <div class="col-md-8 mx-3">
+        <div class="col-12 col-md-8">
             <h1 class="movie-title"></h1>
             <span class="movie-screening text-muted"></span>
-            <p class="movie-overview"></p>
+            <p class="movie-overview text-justify"></p>
 
             <div class="my-2">
                 {{ template "trailer" .imdb }}
             </div>
 
             {{ if .torrents }}
-            <table class="table">
-                <thead>
+            <table class="table table-responsive px-2 w-100">
+                <thead class="w-100">
                     <tr class="row">
+                        <th scope="col" class="col-2">Information</th>
                         <th scope="col" class="col-10">Title</th>
-                        <th scope="col" class="col-2 text-right">Information</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{ range .torrents }}
                     <tr class="row">
-                        <td class="col-10 text-truncate">{{ .Title }}</td>
-                        <td class="col-2 text-right">
-                            <span class="badge badge-secondary">{{ byte .Size }}</span>
+                        <td class="col-2">
                             <form class="inline" action="/torrent/download" method="POST">
                                 <input type="hidden" name="magnet" value="{{ .Magnet }}">
                                 <input type="hidden" name="category" value="{{ .Type }}">
+                                <input type="hidden" name="imdb" value="{{ $.imdb }}">
                                 <button type="submit" class="btn btn-success badge">
                                     <i class="zmdi zmdi-download"></i>
                                 </button>
                             </form>
+                            <span class="badge py-1 badge-secondary">{{ byte .Size }}</span>
                         </td>
+                        <td class="col-10 text-truncate">{{ .Title }}</td>
                     </tr>
                     {{ end }}
                 </tbody>

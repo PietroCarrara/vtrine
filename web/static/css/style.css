@@ -1,17 +1,26 @@
+.movie-poster {
+    /* min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%; */
+    object-fit: cover;
+}
+
+.horizontal-container {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.horizontal-container>div {
+    display: inline-block;
+    float: none;
+}
+
 .lifted {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.75);
 }
 
 .invisible {
     display: none;
-}
-
-.movie-poster {
-    min-width: 100%;
-    min-height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
 }
 
 .unlink, .unlink:hover, .unlink:visited {
@@ -23,24 +32,8 @@
     display: inline;
 }
 
-.pt-50 {
-    padding-top: 50%;
-}
-
-.rh-30 {
-    height: 30rem;
-}
-
-.h-80 {
-    height: 80%;
-}
-
-.vh-75 {
-    height: 75vh;
-}
-
-.vh-90 {
-    height: 90vh;
+.vhmin-90 {
+    height: 90vmin;
 }
 
 .btn-youtube {

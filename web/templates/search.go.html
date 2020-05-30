@@ -6,10 +6,17 @@
 </template>
 
 <div class="container">
+    <h2>Results for "{{ .query }}"</h2>
     <div class="row">
-        <h3>Results</h3>
+        <h3>Movies</h3>
     </div>
-    <div class="row" id="search-container">
+    <div class="container horizontal-container" id="movies-container">
+
+    </div>
+    <div class="row">
+        <h3>TV Shows</h3>
+    </div>
+    <div class="container horizontal-container" id="shows-container">
 
     </div>
 </div>
@@ -19,7 +26,8 @@
     var search = url.searchParams.get('q');
 
     var model = document.querySelector('#thumbnail-model');
-    var area = document.getElementById('search-container');
+    var moviesContainer = document.getElementById('movies-container');
+    var showsContainer = document.getElementById('shows-container');
 
     var movies = tmdb.search.getMovie(search);
     var shows = tmdb.search.getTv(search);
@@ -29,7 +37,7 @@
 
         for (var movie of data.results) {
             promises.push(new Promise(async resolve =>
-                resolve(area.appendChild(await createMovieTMDB(model.innerHTML, movie)))
+                resolve(moviesContainer.appendChild(await createMovieTMDB(model.innerHTML, movie)))
             ));
         }
 
@@ -40,7 +48,7 @@
 
         for (var show of data.results) {
             promises.push(new Promise(async resolve =>
-                resolve(area.appendChild(await createShowTMDB(model.innerHTML, show)))
+                resolve(showsContainer.appendChild(await createShowTMDB(model.innerHTML, show)))
             ));
         }
 

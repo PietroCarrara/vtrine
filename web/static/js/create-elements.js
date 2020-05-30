@@ -11,8 +11,12 @@ async function createMovieTMDB(html, movie) {
     element = element.firstElementChild;
 
     if (!movie.imdb_id) {
-        var ids = await tmdb.movies.getExternalIds(movie.id);
-        movie.imdb_id = ids.imdb_id;
+        try {
+            var ids = await tmdb.movies.getExternalIds(movie.id);
+            movie.imdb_id = ids.imdb_id;
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     setDataMovieTMDB(element, movie);
