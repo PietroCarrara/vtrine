@@ -29,7 +29,7 @@
         var modal = document.getElementById('{{ $uniqueId }}-youtube');
         var youtube = document.getElementById('{{ $uniqueId }}-youtube-iframe');
 
-        $(modal).on('hide.bs.modal', () => youtube.src = youtube.src);
+        $(modal).on('hide.bs.modal', () => youtube.contentWindow.location.replace(youtube.dataset.href));
     })()
 </script>
 {{ end }}
