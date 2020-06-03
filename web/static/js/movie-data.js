@@ -48,7 +48,8 @@ function applyData(elements) {
         }
 
         if (youtubeIframe && i.dataset.youtube) {
-            youtubeIframe.src = `https://www.youtube.com/embed/${i.dataset.youtube}`;
+            youtubeIframe.dataset.href = `https://www.youtube.com/embed/${i.dataset.youtube}`
+            youtubeIframe.contentWindow.location.replace(youtubeIframe.dataset.href)
             if (youtubeButton) {
                 youtubeButton.classList.remove('invisible');
             }
