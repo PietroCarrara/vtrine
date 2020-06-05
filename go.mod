@@ -3,10 +3,11 @@ module github.com/PietroCarrara/vtrine
 go 1.14
 
 replace github.com/qopher/go-torrentapi => github.com/PietroCarrara/go-torrentapi v0.1.3
-replace github.com/gdm85/go-rencode => github.com/PietroCarrara/go-rencode v0.1.6-0.20200518140251-168ecd1aeb04
+replace github.com/PietroCarrara/flood => ../flood
+replace github.com/PietroCarrara/rencode => ../rencode
 
 require (
-	github.com/PietroCarrara/flood v0.0.0-20200518151745-a857b7030291
+	github.com/PietroCarrara/flood v0.0.2
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.6.3

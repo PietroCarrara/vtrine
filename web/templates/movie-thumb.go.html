@@ -1,18 +1,35 @@
 {{ define "movie-thumb" }}
-<div class="col-8 col-md-4 col-lg-3 my-3 movie-data" data-imdb="{{ . }}">
+<div class="col-8 col-md-4 col-lg-3 my-3 movie-data" data-imdb="{{ .IMDB }}">
     <div class="rounded h-100 lifted">
-        <a class="movie-link unlink">
-            <div class="rounded-top text-center">
+        <div class="rounded-top text-center">
+            <a class="movie-link unlink">
                 <img class="movie-poster img-fluid rounded-top">
                 <div class="movie-no-poster invisible">
                     <span class="h1">No Poster</span>
                 </div>
+            </a>
+        </div>
+        <div class="pt-3 pb-1 px-3">
+            <p class="movie-title h5 text-truncate"></p>
+            <span class="movie-screening text-muted"></span>
+        </div>
+        {{ if .ID }}
+            <div class="px-3 pb-3 text-right">
+                {{ if not .Complete }}
+                    <div class="progress mb-2">
+                        <div class="progress-bar {{if .Paused}}bg-paused{{else}}bg-success{{end}}" role="progressbar" style="width: {{ percent .Progress }}%;">
+                            {{ percent .Progress }}%
+                        </div>
+                    </div>
+                {{ end }}
+                <form class="inline" action="/torrent/delete" method="POST">
+                    <input type="hidden" name="id" value="{{ .ID }}">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="zmdi zmdi-delete"></i>
+                    </button>
+                </form>
             </div>
-            <div class="pt-3 pb-1 px-3">
-                <p class="movie-title h5 text-truncate"></p>
-                <span class="movie-screening text-muted"></span>
-            </div>
-        </a>
+        {{ end }}
     </div>
 </div>
 {{ end }}

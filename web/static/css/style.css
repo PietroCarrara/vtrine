@@ -1,8 +1,4 @@
 .movie-poster {
-    /* min-width: 100%;
-    min-height: 100%;
-    max-width: 100%;
-    max-height: 100%; */
     object-fit: cover;
 }
 
@@ -13,6 +9,10 @@
 .horizontal-container>div {
     display: inline-block;
     float: none;
+}
+
+.bg-paused {
+    background-color: #777 !important;
 }
 
 .lifted {
@@ -30,6 +30,10 @@
 
 .inline {
     display: inline;
+}
+
+.inline-block {
+    display: inline-block;
 }
 
 .vhmin-90 {

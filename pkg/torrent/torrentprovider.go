@@ -12,16 +12,16 @@ const (
 // TorrentProvider knows how to communicate with a torrent indexer and
 // retreive data from there
 type TorrentProvider interface {
-	Name() string                                             // The name of the provider
-	SearchIMDB(string) ([]TorrentData, error)                 // Search for media matching the provided IMDB id
-	Search(string) ([]TorrentData, error)                     // Search for torrents
-	SearchMediaType(MediaType, string) ([]TorrentData, error) // Search for torrents of specified media type
-	New() ([]TorrentData, error)                              // New torrents
-	NewMediaType(MediaType) ([]TorrentData, error)            // New torrents of specified medya type
+	Name() string                                              // The name of the provider
+	SearchIMDB(string) ([]ProviderData, error)                 // Search for media matching the provided IMDB id
+	Search(string) ([]ProviderData, error)                     // Search for torrents
+	SearchMediaType(MediaType, string) ([]ProviderData, error) // Search for torrents of specified media type
+	New() ([]ProviderData, error)                              // New torrents
+	NewMediaType(MediaType) ([]ProviderData, error)            // New torrents of specified medya type
 }
 
-// Represents data comming from
-type TorrentData struct {
+// ProviderData represents data comming from the provider
+type ProviderData struct {
 	Title        string    // String to help identify the torrents contents
 	Type         MediaType // What kind of media is this
 	Magnet       string    // The magnet link associated with this torrent

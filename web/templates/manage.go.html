@@ -1,0 +1,27 @@
+{{ template "header" }}
+
+<div class="container my-3">
+    {{ if nonComplete .torrents }}
+        <h3>Downloading</h3>
+        <div class="container horizontal-container">
+            {{ range nonComplete .torrents }}
+                {{ template "movie-thumb" . }}
+            {{ end }}
+        </div>
+    {{ end }}
+
+    {{ if complete .torrents }}
+        <h3>Finished</h3>
+        <div class="container horizontal-container">
+            {{ range complete .torrents }}
+                {{ template "movie-thumb" . }}
+            {{ end }}
+        </div>
+    {{ end }}
+</div>
+
+<script>
+    loadBasic(document.querySelectorAll('.movie-data'))
+    .then(applyData)
+</script>
+

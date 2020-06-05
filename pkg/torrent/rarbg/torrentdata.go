@@ -7,11 +7,11 @@ import (
 	"github.com/qopher/go-torrentapi"
 )
 
-func data(res torrentapi.TorrentResults) []torrent.TorrentData {
-	torrents := make([]torrent.TorrentData, len(res))
+func data(res torrentapi.TorrentResults) []torrent.ProviderData {
+	torrents := make([]torrent.ProviderData, len(res))
 
 	for i, torr := range res {
-		torrents[i] = torrent.TorrentData{
+		torrents[i] = torrent.ProviderData{
 			Title:        torr.Title,
 			Type:         mediaType(torr.Category),
 			Magnet:       torr.Download,
@@ -41,6 +41,6 @@ func mediaType(category string) torrent.MediaType {
 	}
 }
 
-func empty() []torrent.TorrentData {
-	return []torrent.TorrentData{}
+func empty() []torrent.ProviderData {
+	return []torrent.ProviderData{}
 }

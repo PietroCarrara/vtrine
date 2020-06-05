@@ -24,19 +24,19 @@ func (r *Rarbg) Name() string {
 	return name
 }
 
-func (r *Rarbg) Search(s string) ([]torrent.TorrentData, error) {
+func (r *Rarbg) Search(s string) ([]torrent.ProviderData, error) {
 	res, err := r.api.Format(format).SearchString(s).Search()
 
 	return data(res), err
 }
 
-func (r *Rarbg) SearchIMDB(id string) ([]torrent.TorrentData, error) {
+func (r *Rarbg) SearchIMDB(id string) ([]torrent.ProviderData, error) {
 	res, err := r.api.Format(format).SearchIMDb(id).Search()
 
 	return data(res), err
 }
 
-func (r *Rarbg) SearchMediaType(mt torrent.MediaType, s string) ([]torrent.TorrentData, error) {
+func (r *Rarbg) SearchMediaType(mt torrent.MediaType, s string) ([]torrent.ProviderData, error) {
 
 	var res torrentapi.TorrentResults
 	var err error
@@ -53,13 +53,13 @@ func (r *Rarbg) SearchMediaType(mt torrent.MediaType, s string) ([]torrent.Torre
 	return data(res), err
 }
 
-func (r *Rarbg) New() ([]torrent.TorrentData, error) {
+func (r *Rarbg) New() ([]torrent.ProviderData, error) {
 	res, err := r.api.Format(format).List()
 
 	return data(res), err
 }
 
-func (r *Rarbg) NewMediaType(mt torrent.MediaType) ([]torrent.TorrentData, error) {
+func (r *Rarbg) NewMediaType(mt torrent.MediaType) ([]torrent.ProviderData, error) {
 	var res torrentapi.TorrentResults
 	var err error
 
