@@ -46,6 +46,12 @@
     border-color: #ff7f7f;
 }
 
+.btn-imdb {
+    color: #000;
+    font-weight: bold;
+    background-color: #f5c518;
+}
+
 .btn-youtube:hover {
     color: #fff;
     background-color: #d00;

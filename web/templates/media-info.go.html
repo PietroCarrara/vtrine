@@ -12,6 +12,9 @@
 
             <div class="my-2">
                 {{ template "trailer" .imdb }}
+                <a class="btn btn-imdb" target="_blank" href="https://www.imdb.com/title/{{.imdb}}/">
+                    IMDb <i class="zmdi zmdi-open-in-new"></i>
+                </a>
             </div>
 
             {{ if .torrents }}
