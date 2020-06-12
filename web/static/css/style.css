@@ -11,6 +11,24 @@
     float: none;
 }
 
+.btn-youtube {
+    color: #fff;
+    background-color: #f00;
+    border-color: #ff7f7f;
+}
+
+.btn-imdb {
+    color: #000;
+    font-weight: bold;
+    background-color: #f5c518;
+}
+
+.btn-youtube:hover {
+    color: #fff;
+    background-color: #d00;
+    border-color: #e06060;
+}
+
 .bg-paused {
     background-color: #777 !important;
 }
@@ -21,6 +39,11 @@
 
 .invisible {
     display: none;
+}
+
+.vcenter {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .unlink, .unlink:hover, .unlink:visited {
@@ -38,22 +61,4 @@
 
 .vhmin-90 {
     height: 90vmin;
-}
-
-.btn-youtube {
-    color: #fff;
-    background-color: #f00;
-    border-color: #ff7f7f;
-}
-
-.btn-imdb {
-    color: #000;
-    font-weight: bold;
-    background-color: #f5c518;
-}
-
-.btn-youtube:hover {
-    color: #fff;
-    background-color: #d00;
-    border-color: #e06060;
 }

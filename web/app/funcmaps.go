@@ -15,7 +15,8 @@ import (
 )
 
 var funcmaps = template.FuncMap{
-	"env": os.Getenv,
+	"env":         os.Getenv,
+	"bestTorrent": bestTorrent,
 	"url": func(s string) template.URL {
 		return template.URL(s)
 	},
