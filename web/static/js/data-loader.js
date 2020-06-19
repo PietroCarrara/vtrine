@@ -72,7 +72,7 @@ async function loadVideoTMDB(elements) {
     var promises = [];
     var loaded = [];
 
-    for (var i of elements) {
+    for (let i of elements) {
         var res = await tmdb.find.getById(i.dataset.imdb, 'imdb_id');
         var loadFunc = null;
 

@@ -59,7 +59,10 @@
 
         return res;
     })
-    .then(loadVideo)
+    .then(async els => {
+        await loadVideo([els[0]]);
+        return els;
+    })
     .then(loaded => applyData(loaded));
 </script>
 {{ template "footer" }}
