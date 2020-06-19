@@ -14,7 +14,7 @@ func bestTorrent(t []torrent.ProviderData) *torrent.ProviderData {
 	for _, t := range t {
 		name := strings.ToLower(t.Title)
 
-		if strings.Contains(name, "264") && strings.Contains(name, "1080p") && t.Size < 6*gigabyte {
+		if strings.Contains(name, "264") && strings.Contains(name, "1080p") && t.Size < 6*gigabyte && t.Type == torrent.MediaTypeMovie {
 			return &t
 		}
 	}
