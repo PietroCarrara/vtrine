@@ -7,7 +7,7 @@ func media(c *gin.Context) {
 	torrents, _ := provider.SearchIMDB(imdb)
 
 	templates.ExecuteTemplate(c.Writer, "media.go.html", map[string]interface{}{
-		"imdb":     imdb,
+		"IMDB":     imdb,
 		"torrents": torrents,
 	})
 }

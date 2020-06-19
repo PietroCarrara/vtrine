@@ -139,10 +139,12 @@ function loadBasicIMDB(elements) {
 function setDataMovieTMDB(element, movie) {
     var data = element.dataset;
 
+    data.tmdb = movie.id;
     data.dataLoaded = true;
     data.title = movie.title;
     data.overview = movie.overview;
     data.screening = movie.release_date;
+    data.type = 'movie';
 
     if (movie.poster_path !== null) {
         data.poster = tmdb.common.getImage('w342', movie.poster_path);
@@ -154,7 +156,7 @@ function setDataMovieTMDB(element, movie) {
 }
 
 /**
- * Fill a dataset with series data
+ * Fill a dataset with TV Show data
  *
  * @param {HTMLElement} element The element to fill the dataset
  * @param {*} series Object containing series data
@@ -162,10 +164,12 @@ function setDataMovieTMDB(element, movie) {
 function setDataShowTMDB(element, series) {
     var data = element.dataset;
 
+    data.tmdb = series.id;
     data.dataLoaded = true;
     data.title = series.name;
     data.overview = series.overview;
     data.screening = series.first_air_date;
+    data.type = 'show';
 
     if (series.poster_path !== null) {
         data.poster = tmdb.common.getImage('w342', series.poster_path);

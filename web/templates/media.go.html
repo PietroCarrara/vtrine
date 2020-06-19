@@ -4,8 +4,61 @@
     {{ template "media-info" . }}
 </div>
 
+<!-- Model to be cloned by javascript -->
+<template id="related-model">
+    {{ template "movie-thumb" dict }}
+</template>
+
 <script>
+    var relatedContainer = document.querySelector('#related-{{.IMDB}}');
+    var relatedModel = document.querySelector('#related-model')
+
     loadBasic(document.querySelectorAll('.movie-data'))
+    .then(async elems => {
+        // Load recommended media
+        var res = [...elems];
+        var promises = [];
+
+        for (var el of elems) {
+            if (!el.dataset.tmdb) {
+                continue
+            }
+
+            if (el.dataset.type === 'movie') {
+                var i = 0;
+                for (var m of (await tmdb.movies.getRecommendations(el.dataset.tmdb)).results) {
+                    promises.push(new Promise(async resolve => {
+                        var e = relatedContainer.appendChild(await createMovieTMDB(relatedModel.innerHTML, m));
+                        res.push(e);
+                        resolve();
+                    }));
+
+                    i++;
+                    if (i >= 8) {
+                        break;
+                    }
+                }
+            } else if (el.dataset.type === 'show') {
+                var i = 0;
+                for (var m of (await tmdb.tv.getRecommendations(el.dataset.tmdb)).results) {
+                    promises.push(new Promise(async resolve => {
+                        var e = relatedContainer.appendChild(await createShowTMDB(relatedModel.innerHTML, m));
+                        res.push(e);
+                        resolve();
+                    }));
+
+                    i++;
+                    if (i >= 8) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        await Promise.all(promises);
+
+        return res;
+    })
     .then(loadVideo)
     .then(loaded => applyData(loaded));
 </script>
