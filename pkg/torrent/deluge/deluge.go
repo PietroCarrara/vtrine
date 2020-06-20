@@ -100,8 +100,8 @@ func (d *Deluge) downloadLabel(data torrent.ProviderData, label string) error {
 	}
 
 	id, err := d.Core.AddTorrentMagnetOptions(data.Magnet, map[string]interface{}{
-		"move_completed":      true,
-		"move_completed_path": fmt.Sprintf("%s%s/%s/", d.DownloadLocation, label, data.IMDB),
+		flood.MoveOnCompletedField:     true,
+		flood.MoveOnCompletedPathField: fmt.Sprintf("%s%s/%s.%s/", d.DownloadLocation, label, data.Title, data.IMDB),
 	})
 	if err != nil {
 		return err
@@ -139,8 +139,12 @@ func clientDataFromStatus(statuses []flood.TorrentStatus) []torrent.ClientData {
 	res := make([]torrent.ClientData, 0)
 
 	for _, status := range statuses {
+		// Split the directories, and get the imdb after the last '.'
 		parts := strings.FieldsFunc(status.MoveOnCompletedPath, func(r rune) bool {
 			return r == '/'
+		})
+		parts = strings.FieldsFunc(parts[len(parts)-1], func(r rune) bool {
+			return r == '.'
 		})
 		imdb := parts[len(parts)-1]
 

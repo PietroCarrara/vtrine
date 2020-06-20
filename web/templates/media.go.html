@@ -10,10 +10,32 @@
 </template>
 
 <script>
+    // Changes the title in the json of each download option
+    function changeTitles(data) {
+        var title = data.title;
+
+        var year = new Date(data.screening).getFullYear()
+        if (!isNaN(year)) {
+            title = `${data.title} (${year})`;
+        }
+
+        for (var el of document.querySelectorAll('input[name=data]')) {
+            var obj = JSON.parse(el.value);
+            obj.Title = title;
+            el.value = JSON.stringify(obj);
+        }
+    }
+</script>
+
+<script>
     var relatedContainer = document.querySelector('#related-{{.IMDB}}');
     var relatedModel = document.querySelector('#related-model')
 
     loadBasic(document.querySelectorAll('.movie-data'))
+    .then(elems => {
+        changeTitles(elems[0].dataset);
+        return elems;
+    })
     .then(async elems => {
         // Load recommended media
         var res = [...elems];
