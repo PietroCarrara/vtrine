@@ -18,6 +18,22 @@
             {{ end }}
         </div>
     {{ end }}
+
+    <div class="container lifted rounded mt-4 py-2">
+        {{ $usedPerct := (div .usedSpace (add .usedSpace .freeSpace)) }}
+
+        <h4>Status</h4>
+
+        <div class="container">
+            <strong>Storage:</strong>
+            {{ byte (f32toui64 .usedSpace) }} / {{ byte (f32toui64 (add .usedSpace .freeSpace)) }}
+            <div class="progress mb-2">
+                <div class="progress-bar" role="progressbar" style="width: {{ percent $usedPerct }}%; background-color: {{ mix "#28a745" "#dc3545" $usedPerct }};">
+                    {{ percent $usedPerct }}%
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

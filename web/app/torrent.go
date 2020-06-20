@@ -12,12 +12,20 @@ func manage(c *gin.Context) {
 	m, _ := client.ListMovies()
 	s, _ := client.ListShows()
 	a, _ := client.ListAnimes()
-
 	media := join(m, s, a)
 
-	templates.ExecuteTemplate(c.Writer, "manage.go.html", map[string]interface{}{
-		"torrents": media,
+	freeSpace, _ := client.GetFreeSpace()
+	usedSpace, _ := client.GetUsedSpace()
+
+	err := templates.ExecuteTemplate(c.Writer, "manage.go.html", map[string]interface{}{
+		"torrents":  media,
+		"freeSpace": float32(freeSpace),
+		"usedSpace": float32(usedSpace),
 	})
+
+	if err != nil {
+		c.Writer.Write([]byte(err.Error()))
+	}
 }
 
 func download(c *gin.Context) {

@@ -11,6 +11,9 @@ type TorrentClient interface {
 	ListShows() ([]ClientData, error)  // List all tv shows
 	ListAnimes() ([]ClientData, error) // List all animes
 
+	GetFreeSpace() (int, error) // Returns the free space in the disk, in bytes
+	GetUsedSpace() (int, error) // Returns the disk size, in bytes
+
 	RemoveTorrent(id string) error // Remove a torrent
 }
 
