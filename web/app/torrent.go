@@ -11,8 +11,7 @@ import (
 func manage(c *gin.Context) {
 	m, _ := client.ListMovies()
 	s, _ := client.ListShows()
-	a, _ := client.ListAnimes()
-	media := join(m, s, a)
+	media := join(m, s)
 
 	freeSpace, _ := client.GetFreeSpace()
 	usedSpace, _ := client.GetUsedSpace()
@@ -37,8 +36,6 @@ func download(c *gin.Context) {
 		client.DownloadMovie(data)
 	case torrent.MediaTypeTVShow:
 		client.DownloadShow(data)
-	case torrent.MediaTypeAnime:
-		client.DownloadAnime(data)
 	}
 
 	c.Redirect(http.StatusFound, "/torrent/manage")

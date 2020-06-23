@@ -42,7 +42,7 @@ func (r *Rarbg) SearchMediaType(mt torrent.MediaType, s string) ([]torrent.Provi
 	var err error
 
 	switch mt {
-	case torrent.MediaTypeAnime, torrent.MediaTypeUnknown:
+	case torrent.MediaTypeUnknown:
 		return empty(), nil
 	case torrent.MediaTypeMovie:
 		res, err = r.api.Format(format).Movies().SearchString(s).Search()
@@ -64,7 +64,7 @@ func (r *Rarbg) NewMediaType(mt torrent.MediaType) ([]torrent.ProviderData, erro
 	var err error
 
 	switch mt {
-	case torrent.MediaTypeAnime, torrent.MediaTypeUnknown:
+	case torrent.MediaTypeUnknown:
 		return empty(), nil
 	case torrent.MediaTypeMovie:
 		res, err = r.api.Format(format).Movies().List()

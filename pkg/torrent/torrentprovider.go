@@ -5,7 +5,6 @@ type MediaType int
 const (
 	MediaTypeMovie MediaType = iota
 	MediaTypeTVShow
-	MediaTypeAnime
 	MediaTypeUnknown
 )
 
@@ -36,8 +35,6 @@ func (m MediaType) String() string {
 		return "movie"
 	case MediaTypeTVShow:
 		return "tv"
-	case MediaTypeAnime:
-		return "anime"
 	default:
 		return "unknown"
 	}

@@ -16,9 +16,8 @@ type Deluge struct {
 }
 
 const (
-	movieLabel  = "movies"
-	showsLabel  = "shows"
-	animesLabel = "animes"
+	movieLabel = "movies"
+	showsLabel = "shows"
 )
 
 func New() (*Deluge, error) {
@@ -60,11 +59,6 @@ func (d *Deluge) DownloadShow(data torrent.ProviderData) error {
 	return d.downloadLabel(data, showsLabel)
 }
 
-// DownloadAnime downloads a magnet link and adds it to the anime label
-func (d *Deluge) DownloadAnime(data torrent.ProviderData) error {
-	return d.downloadLabel(data, animesLabel)
-}
-
 // ListMovies lists all the movies registered within the movies label
 func (d *Deluge) ListMovies() ([]torrent.ClientData, error) {
 	return d.listLabel(movieLabel)
@@ -73,11 +67,6 @@ func (d *Deluge) ListMovies() ([]torrent.ClientData, error) {
 // ListShows lists all the movies registered within the tv label
 func (d *Deluge) ListShows() ([]torrent.ClientData, error) {
 	return d.listLabel(showsLabel)
-}
-
-// ListAnimes lists all the movies registered within the anime label
-func (d *Deluge) ListAnimes() ([]torrent.ClientData, error) {
-	return d.listLabel(animesLabel)
 }
 
 // GetFreeSpace returns the free space in the disk
