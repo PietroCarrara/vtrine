@@ -11,8 +11,8 @@ type TorrentClient interface {
 	ListShows() ([]ClientData, error)  // List all tv shows
 	ListAnimes() ([]ClientData, error) // List all animes
 
-	GetFreeSpace() (int, error) // Returns the free space in the disk, in bytes
-	GetUsedSpace() (int, error) // Returns the disk size, in bytes
+	GetFreeSpace() (uint64, error) // Returns the free space in the disk, in bytes
+	GetUsedSpace() (uint64, error) // Returns the disk size, in bytes
 
 	RemoveTorrent(id string) error // Remove a torrent
 }
@@ -20,7 +20,7 @@ type TorrentClient interface {
 type ClientData struct {
 	ID       string  // Internal ID
 	Title    string  // Name of the torrent
-	Size     int     // Size in bytes
+	Size     uint64  // Size in bytes
 	IMDB     string  // IMDB id of this media
 	Complete bool    // Is the download finished?
 	Paused   bool    // Is this torrent currently paused?

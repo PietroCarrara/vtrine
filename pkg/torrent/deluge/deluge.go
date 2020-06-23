@@ -81,18 +81,18 @@ func (d *Deluge) ListAnimes() ([]torrent.ClientData, error) {
 }
 
 // GetFreeSpace returns the free space in the disk
-func (d *Deluge) GetFreeSpace() (int, error) {
+func (d *Deluge) GetFreeSpace() (uint64, error) {
 	return d.Core.GetFreeSpaceDefault()
 }
 
 // GetUsedSpace returns the sum of all of the torrents' sizes
-func (d *Deluge) GetUsedSpace() (int, error) {
+func (d *Deluge) GetUsedSpace() (uint64, error) {
 	torr, err := d.Core.GetTorrentsStatus(nil, flood.TotalSizeField)
 	if err != nil {
 		return 0, err
 	}
 
-	var used int
+	var used uint64
 	for _, t := range torr {
 		used += t.TotalSize
 	}
