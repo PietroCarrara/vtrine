@@ -24,6 +24,7 @@ func Serve(port int, torr torrent.TorrentProvider, cli torrent.TorrentClient) {
 	router.GET("/media/:imdb", media)
 	router.GET("/search/name", searchName)
 	router.GET("/torrent/manage", manage)
+	router.GET("/torrent/external", external)
 	router.POST("/torrent/download", download)
 	router.POST("/torrent/delete", remove)
 	router.Static("/static", "web/static")

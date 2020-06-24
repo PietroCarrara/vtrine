@@ -1,0 +1,111 @@
+{{ template "header" }}
+
+<div class="container my-2">
+    <h1>Import custom torrent</h1>
+
+    <div class="container my-2">
+        <input class="form-control auto-complete" type="select" data-noresults-text="No results." placeholder="Search for the media you wish to import" autocomplete="off">
+
+        <div id="media-info" class="container movie-data my-4">
+            <div class="row border-bottom mb-2">
+                <div class="col-12 col-md-4 text-center mb-4">
+                    <img class="movie-poster lifted rounded img-fluid">
+                </div>
+                <div class="col-12 col-md-8">
+                    <h1 class="movie-title"></h1>
+                    <span class="movie-screening text-muted"></span>
+                    <p class="movie-overview text-justify"></p>
+
+                    <div class="my-2 row">
+                        <div class="col-6 offset-6 float-right">
+                            <div class="text-right float-right">
+                                {{ template "trailer" .IMDB }}
+                                <a class="btn btn-imdb invisible media-info-imdb-button" target="_blank">
+                                    IMDb <i class="zmdi zmdi-open-in-new"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const mediaInfoElement = document.querySelector('#media-info');
+
+    $('.auto-complete').autoComplete({
+        resolverSettings: {
+            requestThrottling: 2000,
+        },
+        formatResult: item => {
+            return {
+                value: item.id,
+                text: item.text,
+                html: [
+                    $('<img>').attr('src', item.icon).css('height', 72),
+                    ' ',
+                    item.text
+                ]
+            };
+        },
+        events: {
+            search: async (q, callback, el) => {
+                movies = tmdb.search.getMovie(q);
+                shows = tmdb.search.getTv(q);
+                [movies, shows] = await Promise.all([movies, shows]);
+
+                var media = [];
+
+                var x = 0;
+                for (var i of movies.results) {
+                    media.push({
+                        value: { id: i.id, type: 'movie' },
+                        text: i.title,
+                        icon: i.poster_path ? tmdb.common.getImage('w342', i.poster_path) : undefined,
+                    });
+
+                    x++;
+                    if (x >= 3) {
+                        break;
+                    }
+                }
+
+                x = 0;
+                for (var i of shows.results) {
+                    media.push({
+                        value: { id: i.id, type: 'show' },
+                        text: i.name,
+                        icon: i.poster_path ? tmdb.common.getImage('w342', i.poster_path) : undefined,
+                    });
+
+                    x++;
+                    if (x >= 3) {
+                        break;
+                    }
+                }
+
+                callback(media);
+            },
+        }
+    });
+    $('.auto-complete').on('autocomplete.select', async (info, item) => {
+
+        if (item.value.type === 'movie') {
+            movie = await tmdb.movies.getById(item.value.id);
+            setDataMovieTMDB(mediaInfoElement, movie);
+        } else if (item.value.type === 'show') {
+            show = await tmdb.tv.getById(item.value.id);
+            setDataShowTMDB(mediaInfoElement, show);
+        } else {
+            throw `unknown media type ${item.value.type}`;
+        }
+
+        await loadVideo([mediaInfoElement]);
+        applyData([mediaInfoElement]);
+    })
+</script>
+
+{{ template "footer" }}

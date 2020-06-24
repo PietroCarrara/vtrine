@@ -48,6 +48,10 @@ func remove(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/torrent/manage")
 }
 
+func external(c *gin.Context) {
+	templates.ExecuteTemplate(c.Writer, "external.go.html", nil)
+}
+
 func join(v ...[]torrent.ClientData) []torrent.ClientData {
 	res := make([]torrent.ClientData, 0)
 

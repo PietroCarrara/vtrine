@@ -34,29 +34,29 @@ function loadVideo(elements) {
  */
 function loadBasicTMDB(elements) {
     var promises = [];
-    var loaded = [];
 
     for (let i of elements) {
-        if (!i.dataset.imdb || i.dataset.dataLoaded) {
+        if (!i.dataset.imdb) {
             continue;
         }
 
         var prom = tmdb.find
-            .getById(i.dataset.imdb, 'imdb_id')
-            .then(async res => {
-                if (res.movie_results.length > 0) {
-                    loaded.push(i);
-                    setDataMovieTMDB(i, res.movie_results[0]);
-                } else if (res.tv_results.length > 0) {
-                    loaded.push(i);
-                    setDataShowTMDB(i, res.tv_results[0]);
-                }
-            });
+        .getById(i.dataset.imdb, 'imdb_id')
+        .then(res => {
+            if (res.movie_results.length > 0) {
+                setDataMovieTMDB(i, res.movie_results[0]);
+                return i;
+            } else if (res.tv_results.length > 0) {
+                loaded.push(i);
+                setDataShowTMDB(i, res.tv_results[0]);
+                return i;
+            }
+        });
 
         promises.push(prom);
     }
 
-    return Promise.all(promises).then(() => loaded);
+    return Promise.all(promises);
 }
 
 /**
@@ -139,7 +139,6 @@ function loadBasicIMDB(elements) {
 function setDataMovieTMDB(element, movie) {
     var data = element.dataset;
 
-    data.tmdb = movie.id;
     data.dataLoaded = true;
     data.title = movie.title;
     data.overview = movie.overview;
@@ -150,7 +149,7 @@ function setDataMovieTMDB(element, movie) {
         data.poster = tmdb.common.getImage('w342', movie.poster_path);
     }
 
-    if (!data.imdb && movie.imdb_id) {
+    if (movie.imdb_id) {
         data.imdb = movie.imdb_id;
     }
 }
@@ -164,7 +163,6 @@ function setDataMovieTMDB(element, movie) {
 function setDataShowTMDB(element, series) {
     var data = element.dataset;
 
-    data.tmdb = series.id;
     data.dataLoaded = true;
     data.title = series.name;
     data.overview = series.overview;
@@ -175,7 +173,7 @@ function setDataShowTMDB(element, series) {
         data.poster = tmdb.common.getImage('w342', series.poster_path);
     }
 
-    if (!data.imdb && series.imdb_id) {
+    if (series.imdb_id) {
         data.imdb = series.imdb_id;
     }
 }

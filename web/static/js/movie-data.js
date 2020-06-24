@@ -13,6 +13,7 @@ function applyData(elements) {
         var overview = i.querySelector('.movie-overview');
         var youtubeButton = i.querySelector('.movie-trailer-youtube-button');
         var youtubeIframe = i.querySelector('.movie-trailer-youtube-iframe');
+        var imdbButton = i.querySelector('.media-info-imdb-button');
 
         if (title) {
             if (i.dataset.title) {
@@ -47,11 +48,27 @@ function applyData(elements) {
             }
         }
 
-        if (youtubeIframe && i.dataset.youtube) {
-            youtubeIframe.dataset.href = `https://www.youtube.com/embed/${i.dataset.youtube}`
-            youtubeIframe.contentWindow.location.replace(youtubeIframe.dataset.href)
-            if (youtubeButton) {
+        if (youtubeIframe) {
+            if (i.dataset.youtube) {
+                youtubeIframe.dataset.href = `https://www.youtube.com/embed/${i.dataset.youtube}`
+                youtubeIframe.contentWindow.location.replace(youtubeIframe.dataset.href)
+            }
+        }
+
+        if (youtubeButton) {
+            if (i.dataset.youtube) {
                 youtubeButton.classList.remove('invisible');
+            } else {
+                youtubeButton.classList.add('invisible');
+            }
+        }
+
+        if (imdbButton) {
+            if (i.dataset.imdb) {
+                imdbButton.href = `https://www.imdb.com/title/${i.dataset.imdb}/`;
+                imdbButton.classList.remove('invisible');
+            } else {
+                imdbButton.classList.add('invisible');
             }
         }
     }
