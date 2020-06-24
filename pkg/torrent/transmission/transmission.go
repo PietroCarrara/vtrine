@@ -128,7 +128,6 @@ func (t *Transmission) listInLocation(location string) ([]torrent.ClientData, er
 		"id",
 		"downloadDir",
 		"name",
-		"doneDate",
 		"percentDone",
 		"totalSize",
 		"status",
@@ -161,7 +160,7 @@ func clientDataFromTorrent(t *transmissionrpc.Torrent) torrent.ClientData {
 
 	return torrent.ClientData{
 		ID:       id,
-		Complete: t.DoneDate.IsZero(),
+		Complete: *t.Status == transmissionrpc.TorrentStatusSeed,
 		IMDB:     imdb,
 		Paused:   *t.Status != transmissionrpc.TorrentStatusDownload,
 		Progress: float32(*t.PercentDone),
