@@ -74,6 +74,8 @@
                         break;
                     }
                 }
+            } else {
+                throw `unknown media type ${el.dataset.type}`;
             }
         }
 

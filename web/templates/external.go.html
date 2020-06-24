@@ -3,8 +3,16 @@
 <div class="container my-2">
     <h1>Import custom torrent</h1>
 
-    <div class="container my-2">
-        <input class="form-control auto-complete" type="select" data-noresults-text="No results." placeholder="Search for the media you wish to import" autocomplete="off">
+    <div class="container my-2" onsubmit="submit(event)">
+        <form class="my-2" method="POST" action="/torrent/download">
+            <input class="form-control my-2 auto-complete" type="select" data-noresults-text="No results."
+                placeholder="Search for the media you wish to import" autocomplete="off">
+            <input class="form-control my-2" id="magnet" type="text" placeholder="Magnet for the torrent">
+            <input type="hidden" name="data">
+            <button class="btn btn-outline-success" type="submit">
+                Import
+            </button>
+        </form>
 
         <div id="media-info" class="container movie-data my-4">
             <div class="row border-bottom mb-2">
@@ -95,9 +103,13 @@
 
         if (item.value.type === 'movie') {
             movie = await tmdb.movies.getById(item.value.id);
+            var ids = await tmdb.movies.getExternalIds(movie.id);
+            movie.imdb_id = ids.imdb_id;
             setDataMovieTMDB(mediaInfoElement, movie);
         } else if (item.value.type === 'show') {
             show = await tmdb.tv.getById(item.value.id);
+            var ids = await tmdb.tv.getExternalIds(show.id);
+            show.imdb_id = ids.imdb_id;
             setDataShowTMDB(mediaInfoElement, show);
         } else {
             throw `unknown media type ${item.value.type}`;
@@ -105,7 +117,34 @@
 
         await loadVideo([mediaInfoElement]);
         applyData([mediaInfoElement]);
-    })
+    });
+
+    function submit(event) {
+        var magnet = document.querySelector('#magnet').value;
+        var data = document.querySelector('input[name=data]');
+
+        if (!mediaInfoElement.dataset.imdb || !magnet) {
+            event.preventDefault();
+            return;
+        }
+
+        var form = new FormData();
+
+        var title = mediaInfoElement.dataset.title;
+        if (mediaInfoElement.dataset.screening) {
+            title += ` (${new Date(mediaInfoElement.dataset.screening).getFullYear()})`;
+        }
+
+        var json = {
+            Title: title,
+            Type: mediaInfoElement.dataset.type,
+            Magnet: magnet,
+            Size: 0,
+            IMDB: mediaInfoElement.dataset.imdb,
+            ProviderName: 'external',
+        };
+        data.value = JSON.stringify(json);
+    }
 </script>
 
 {{ template "footer" }}
