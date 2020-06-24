@@ -147,7 +147,7 @@ func (t *Transmission) listInLocation(location string) ([]torrent.ClientData, er
 }
 
 func clientDataFromTorrent(t *transmissionrpc.Torrent) torrent.ClientData {
-	id := fmt.Sprint(t.ID)
+	id := fmt.Sprint(*t.ID)
 
 	// Split the directories, and get the imdb after the last '.'
 	parts := strings.FieldsFunc(*t.DownloadDir, func(r rune) bool {
