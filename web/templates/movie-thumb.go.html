@@ -12,6 +12,9 @@
         <div class="pt-3 pb-1 px-3">
             <p class="movie-title h5 text-truncate"></p>
             <span class="movie-screening text-muted"></span>
+            {{ if .Size }}
+                <span class="badge badge-secondary float-right">{{ byte .Size }}</span>
+            {{ end }}
         </div>
         {{ if .ID }}
             <div class="px-3 pb-3 text-right">
