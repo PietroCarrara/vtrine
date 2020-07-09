@@ -24,6 +24,21 @@
                             {{ percent .Progress }}%
                         </div>
                     </div>
+                    {{ if .Paused }}
+                        <form class="inline" action="/torrent/resume" method="POST">
+                            <input type="hidden" name="id" value="{{ .ID }}">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="zmdi zmdi-play"></i>
+                            </button>
+                        </form>
+                    {{ else }}
+                        <form class="inline" action="/torrent/pause" method="POST">
+                            <input type="hidden" name="id" value="{{ .ID }}">
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="zmdi zmdi-pause"></i>
+                            </button>
+                        </form>
+                    {{ end }}
                 {{ end }}
                 <form class="inline" action="/torrent/delete" method="POST">
                     <input type="hidden" name="id" value="{{ .ID }}">

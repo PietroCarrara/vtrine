@@ -8,9 +8,9 @@ Vtrine is a software that searches for torrents and presents information about m
 
 It integrates with a bittorrent client and doesn't reinvent the wheel. At the moment we support:
 
- - Deluge
  - Transmission
+ - ~~Deluge~~ (Missing PauseTorrent/ResumeTorrent)
 
 It is small, and fits well in a HTPC, serving as a menu of media to watch.
 
-![downloads.jpg](screenshots/downloads.jpg)
+![downloads.jpg](screenshots/downloads.png)

@@ -26,6 +26,8 @@ func Serve(port int, torr torrent.TorrentProvider, cli torrent.TorrentClient) {
 	router.GET("/torrent/manage", manage)
 	router.GET("/torrent/external", external)
 	router.POST("/torrent/download", download)
+	router.POST("/torrent/pause", pause)
+	router.POST("/torrent/resume", resume)
 	router.POST("/torrent/delete", remove)
 	router.Static("/static", "web/static")
 

@@ -96,6 +96,30 @@ func (t *Transmission) GetUsedSpace() (uint64, error) {
 	return total, nil
 }
 
+// PauseTorrent pauses a torrent download
+func (t *Transmission) PauseTorrent(id string) error {
+	idInt, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return err
+	}
+
+	err = t.c.TorrentStopIDs([]int64{idInt})
+
+	return err
+}
+
+// ResumeTorrent resumes a torrent download
+func (t *Transmission) ResumeTorrent(id string) error {
+	idInt, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return err
+	}
+
+	err = t.c.TorrentStartIDs([]int64{idInt})
+
+	return err
+}
+
 // RemoveTorrent removes a torrent alongside it's data
 func (t *Transmission) RemoveTorrent(id string) error {
 	idInt, err := strconv.ParseInt(id, 10, 64)

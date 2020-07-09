@@ -52,6 +52,20 @@ func external(c *gin.Context) {
 	templates.ExecuteTemplate(c.Writer, "external.go.html", nil)
 }
 
+func pause(c *gin.Context) {
+	id := c.PostForm("id")
+	client.PauseTorrent(id)
+
+	c.Redirect(http.StatusFound, "/torrent/manage")
+}
+
+func resume(c *gin.Context) {
+	id := c.PostForm("id")
+	client.ResumeTorrent(id)
+
+	c.Redirect(http.StatusFound, "/torrent/manage")
+}
+
 func join(v ...[]torrent.ClientData) []torrent.ClientData {
 	res := make([]torrent.ClientData, 0)
 

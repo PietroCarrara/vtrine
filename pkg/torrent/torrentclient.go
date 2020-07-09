@@ -12,6 +12,8 @@ type TorrentClient interface {
 	GetFreeSpace() (uint64, error) // Returns the free space in the disk, in bytes
 	GetUsedSpace() (uint64, error) // Returns the disk size, in bytes
 
+	PauseTorrent(id string) error  // Pause a torrent download
+	ResumeTorrent(id string) error // Resume a torrent download
 	RemoveTorrent(id string) error // Remove a torrent
 }
 

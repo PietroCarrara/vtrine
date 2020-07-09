@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/PietroCarrara/vtrine/pkg/torrent"
-	"github.com/PietroCarrara/vtrine/pkg/torrent/deluge"
 	"github.com/PietroCarrara/vtrine/pkg/torrent/rarbg"
 	"github.com/PietroCarrara/vtrine/pkg/torrent/transmission"
 	"github.com/PietroCarrara/vtrine/web/app"
@@ -26,8 +25,9 @@ func main() {
 	var err error
 
 	switch os.Getenv("CLIENT") {
-	case "deluge":
-		client, err = deluge.New()
+	// TODO: Update deluge
+	// case "deluge":
+	// client, err = deluge.New()
 	case "transmission":
 		client, err = transmission.New()
 	default:
