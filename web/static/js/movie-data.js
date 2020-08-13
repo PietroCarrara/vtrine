@@ -12,7 +12,6 @@ function applyData(elements) {
         var link = i.querySelector('.movie-link');
         var overview = i.querySelector('.movie-overview');
         var youtubeButton = i.querySelector('.movie-trailer-youtube-button');
-        var youtubeIframe = i.querySelector('.movie-trailer-youtube-iframe');
         var imdbButton = i.querySelector('.media-info-imdb-button');
 
         if (title) {
@@ -48,15 +47,10 @@ function applyData(elements) {
             }
         }
 
-        if (youtubeIframe) {
-            if (i.dataset.youtube) {
-                youtubeIframe.dataset.href = `https://www.youtube.com/embed/${i.dataset.youtube}`
-                youtubeIframe.contentWindow.location.replace(youtubeIframe.dataset.href)
-            }
-        }
 
         if (youtubeButton) {
             if (i.dataset.youtube) {
+                youtubeButton.href = `https://www.youtube.com/watch?v=${i.dataset.youtube}`
                 youtubeButton.classList.remove('invisible');
             } else {
                 youtubeButton.classList.add('invisible');
